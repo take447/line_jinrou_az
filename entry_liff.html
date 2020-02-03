@@ -36,10 +36,12 @@
                 </div>
             </form>
 
+            <div>{{err}}</div>
+
 
 
             <button type="button" class="btn btn-primary btn-lg btn-block fixed-bottom" v-if="(data.cn !='' && ( data.type == 'player' || data.code != '' ))" @click="enter">参加する</button>
-        </div>
+        </div>{{err}}</div>
     </div>
         
         
@@ -62,12 +64,13 @@
                     code:''
                 },
                 isShow: true,
-                isStand:false
+                isStand:false,
+                err:''
             },
             mounted :function(){
                 liff
                 .init({
-                    liffId: "1575215646-516yN013" // use own liffId
+                    liffId: "1653591503-lO4np8eg" // use own liffId
                 })
                 .then(() => {
                     // Start to use liff's api
@@ -121,7 +124,7 @@
                             });
 
                     })
-                    .catch(response => console.log(response));
+                    .catch(response => {console.log(response);this.err = JSON.stringify(response)});
                 }
             }
         })
