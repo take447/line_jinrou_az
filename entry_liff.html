@@ -35,13 +35,14 @@
                     <input v-model="data.code" class="col-12" type="text" class="form-control" id="cn" placeholder="数字">
                 </div>
             </form>
-
+            
             <div>{{err}}</div>
 
 
 
             <button type="button" class="btn btn-primary btn-lg btn-block fixed-bottom" v-if="(data.cn !='' && ( data.type == 'player' || data.code != '' ))" @click="enter">参加する</button>
         </div>{{err}}</div>
+        <div class="spinner-border" role="status"><span class="sr-only" v-show="isShow==false">Loading...</span></div>
     </div>
         
         
