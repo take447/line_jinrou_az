@@ -102,6 +102,9 @@
             methods:{
                 enter: function(){
                     this.isShow = false;
+                    if(this.type=='player'){
+                        this.code='';
+                    }
 
                     //データをpostして
                     axios.post('https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec',JSON.stringify(this.data))
