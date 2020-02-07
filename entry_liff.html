@@ -92,7 +92,7 @@
 
                             axios.get("https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec?mode=villageInfo")
                                 .then(function (response) {
-                                    var villageInfo = JSON.parse(JSON.stringify(response));
+                                    var villageInfo = response.data;
                                     console.log(villageInfo);//デバッグ
                                     this.err = response; //デバッグ
                                     if(villageInfo.exists == true){
