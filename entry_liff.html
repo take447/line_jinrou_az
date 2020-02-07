@@ -102,8 +102,13 @@
 
                                         }else{
                                             //ゲーム開始前じゃない
+                                            console.log('パターン2')
                                             this.isError = true;
                                         }
+                                    }else{
+                                        //ゲーム開始前じゃない
+                                        console.log('パターン1')
+                                        this.isError = true;
                                     } 
                                 })
                                 .catch(function (error) {
