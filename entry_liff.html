@@ -92,7 +92,7 @@
 
                             axios.get("https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec?mode=villageInfo")
                                 .then(function (response) {
-                                    var villageInfo = JSON.parse(response);
+                                    var villageInfo = JSON.parse(JSON.stringify(response));
                                     this.err = response; //デバッグ
                                     if(villageInfo.exists == true){
                                         if(villageInfo.day == '0' && villageInfo.time =='開始前'){
