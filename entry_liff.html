@@ -79,6 +79,7 @@
                 err:''
             },
             mounted :function(){
+                var self = this;
                 liff
                 .init({
                     liffId: "1653830188-BYgGge8Y" // use own liffId
@@ -87,7 +88,7 @@
                     // Start to use liff's api
                     liff.getProfile()
                         .then(function(profile){
-                            console.log(this.data);
+                            console.log(self.data);
                             this.data.uid = profile.userId;
                             this.data.name = profile.displayName;
 
