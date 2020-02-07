@@ -87,6 +87,7 @@
                     // Start to use liff's api
                     liff.getProfile()
                         .then(function(profile){
+                            console.log(this.data);
                             this.data.uid = profile.userId;
                             this.data.name = profile.displayName;
 
