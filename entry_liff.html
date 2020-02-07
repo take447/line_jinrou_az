@@ -13,7 +13,7 @@
 <body class="my-5">
     <div id="app">
         <div class="fixed-top h5 bg-info text-white mx-auto">{{data.name}} > メニュー > 参加 </div>
-        div class="container" v-show="isShow">
+        <div class="container" v-show="isShow">
             <form class="form">
                 <div class="form-group">
                     <label class="control-label">プレイヤー・スタンド選択</label>
@@ -35,16 +35,17 @@
                     <input v-model="data.code" class="col-12" type="text" class="form-control" id="cn" placeholder="数字">
                 </div>
             </form>
+        </div>
             
-            <div v-if="isError">ゲーム開始前じゃないから参加できないよ</div>
-            <div>{{err}}</div>
+        <div v-if="isError">ゲーム開始前じゃないから参加できないよ</div>
+        <div>{{err}}</div>
 
 
 
-            <button type="button" class="btn btn-primary btn-lg btn-block fixed-bottom" v-if="(data.cn !='' && ( data.type == 'player' || data.code != '' ))" @click="enter">参加する</button>
-        <div>ゲーム開始前じゃないから参加できないよ</div>
+        <button type="button" class="btn btn-primary btn-lg btn-block fixed-bottom" v-if="(data.cn !='' && ( data.type == 'player' || data.code != '' ))" @click="enter">参加する</button>
 
-        <div class="d-flex justify-content-center" v-if="!isShow">
+
+        <div class="d-flex justify-content-center" v-if="!isShow && !isError">
             <div class="spinner-border " role="status">
                 <span class="sr-only">Loading...</span>
             </div>
