@@ -45,7 +45,7 @@
         <button type="button" class="btn btn-primary btn-lg btn-block fixed-bottom" v-if="(data.cn !='' && ( data.type == 'player' || data.code != '' ))" @click="enter">参加する</button>
 
 
-        <div class="d-flex justify-content-center" v-if="(!isShow && !isError)">
+        <div class="d-flex justify-content-center" v-if="!(isShow || isError)">
             <div class="spinner-border " role="status">
                 <span class="sr-only">Loading...</span>
             </div>
