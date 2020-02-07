@@ -83,7 +83,7 @@
                 .init({
                     liffId: "1653830188-BYgGge8Y" // use own liffId
                 })
-                .then(() => {
+                .then(function() {
                     // Start to use liff's api
                     liff.getProfile()
                         .then(profile => {
@@ -98,17 +98,14 @@
                                     if(villageInfo.exists == true){
                                         if(villageInfo.day == '0' && villageInfo.time =='開始前'){
                                             //ゲーム開始前なのでOK
-                                            console.log('パターン3');
                                             this.isShow = true;
 
                                         }else{
                                             //ゲーム開始前じゃない
-                                            console.log('パターン2');
                                             this.isError = true;
                                         }
                                     }else{
                                         //ゲーム開始前じゃない
-                                        console.log('パターン1');
                                         this.isError = true;
                                     } 
                                 })
