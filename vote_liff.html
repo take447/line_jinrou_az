@@ -63,7 +63,6 @@
                     playerList:[]
                 },
                 isShow: false,
-                isStand:false,
                 isError:false,
             },
             mounted :function(){
@@ -87,6 +86,7 @@
                                     if(Object.keys(getData).length ===2){
                                         self.day = getData.day;
                                         self.list = getData.list;
+                                        self.isShow = true;
                                     }else{
                                         //ゲーム開始前じゃない
                                         self.isError = true;
