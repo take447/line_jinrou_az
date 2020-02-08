@@ -12,7 +12,7 @@
 
 <body class="my-5">
     <div id="app">
-        <div class="fixed-top h5 bg-info text-white mx-auto">{{name}} > メニュー > 投票 > {{day}}日目 </div>
+        <div class="fixed-top h5 bg-info text-white mx-auto">{{name}} > メニュー > 投票 > {{data.day}}日目 </div>
         <div class="container" v-show="isShow">
             <div class="row">
                 <ul class="list-group col-12">
@@ -20,7 +20,7 @@
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="vote" v-model="data.vote" :id="player.id" :value="player" :disabled="player.life !='生存'">
                             <label class="form-check-label" :for="player.id">
-                                {{player.cn}}<span class="badge badge-pill badge-danger" v-if="player.life !='生存'">不在</span>
+                                {{player.cn}}<span class="badge badge-pill badge-danger" v-if="player.life !='生存'">投票不可</span>
                             </label>
                         </div>
                     </li>
@@ -56,14 +56,15 @@
             el: '#app',
             data: {
                 data: {
-                    liffMode: 'vote',                   
+                    liffMode: 'vote',
+                    vid:'',                   
                     pip:'',
-                    vote:'',
+                    day:'',
+                    vote:{},
                     
                 },
                 uid: '',
                 name:'',
-                day:'',
                 playerList:[],
                 isShow: false,
                 isError:false,
@@ -85,8 +86,9 @@
                                 .then(function(response){   
                                     var getData = response.data;
                                     if(Object.keys(getData).length ===2){
-                                        self.day = getData.day;
+                                        self.data.day = getData.day;
                                         self.playerList = getData.list;
+                                        self.data.vid = getData.villageId;
                                         self.isShow = true;
                                     }else{
                                         //ゲーム開始前じゃない
@@ -124,17 +126,10 @@
 
 
                         var mes = [];
-                        if(this.data.type == 'player'){
                             mes[0] = {
                                 type: 'text',
-                                text:'キャラクターネーム【' + this.data.cn + '】でプレイヤーとして参加しました'
+                                text: this.data.day + '日目【' + this.data.vote.cn + '】に投票しました'
                             };
-                        }else{
-                            mes[0] = {
-                                type: 'text',
-                                text:'キャラクターネーム【' + this.data.cn + '】でスタンドとして参加しました'
-                            };
-                        }
 
                         liff.sendMessages(mes)
                             .then(() => {
