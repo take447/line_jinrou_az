@@ -56,12 +56,15 @@
             el: '#app',
             data: {
                 data: {
-                    liffMode: 'vote',
-                    uid: '',
-                    namae:'',
+                    liffMode: 'vote',                   
                     pip:'',
-                    playerList:[]
+                    vote:'',
+                    
                 },
+                uid: '',
+                name:'',
+                day:'',
+                playerList:[],
                 isShow: false,
                 isError:false,
             },
@@ -75,18 +78,17 @@
                     // Start to use liff's api
                     liff.getProfile()
                         .then(function(profile){
-                            self.data.uid = profile.userId;
-                            self.data.name = profile.displayName;
-                            console.log(self.data);
+                            self.uid = profile.userId;
+                            self.name = profile.displayName;
 
                             axios.get("https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec?mode=voteMember&userid="+self.data.uid)
                                 .then(function(response){   
                                     var getData = response.data;
-                                    console.log(getData);//デバッグ
                                     if(Object.keys(getData).length ===2){
                                         self.day = getData.day;
-                                        self.list = getData.list;
+                                        self.playerList = getData.list;
                                         self.isShow = true;
+                                        console.log(self.data);
                                     }else{
                                         //ゲーム開始前じゃない
                                         self.isError = true;
