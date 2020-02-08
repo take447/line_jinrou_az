@@ -18,7 +18,7 @@
                 <ul class="list-group col-12">
                     <li class="list-group-item" v-for="player in playerList">                   
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="vote" v-model="vote" :id="player.id" :value="player" :disabled="player.life !='生存'">
+                            <input class="form-check-input" type="radio" name="vote" v-model="data.vote" :id="player.id" :value="player" :disabled="player.life !='生存'">
                             <label class="form-check-label" :for="player.id">
                                 {{player.name}}<span class="badge badge-pill badge-danger" v-if="player.life !='生存'">不在</span>
                             </label>
@@ -84,12 +84,11 @@
                             axios.get("https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec?mode=voteMember&userid="+self.uid)
                                 .then(function(response){   
                                     var getData = response.data;
-                                    console.log(response);
                                     if(Object.keys(getData).length ===2){
                                         self.day = getData.day;
                                         self.playerList = getData.list;
                                         self.isShow = true;
-                                        console.log(self.data);
+                                        console.log(self.playerList);
                                     }else{
                                         //ゲーム開始前じゃない
                                         self.isError = true;
