@@ -85,13 +85,13 @@
                             axios.get("https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec?mode=voteMember&userid="+self.uid)
                                 .then(function(response){   
                                     var getData = response.data;
-                                    if(Object.keys(getData).length ===2){
+                                    if(Object.keys(getData).length ===3){
                                         self.data.day = getData.day;
                                         self.playerList = getData.list;
                                         self.data.vid = getData.villageId;
                                         self.isShow = true;
                                     }else{
-                                        //ゲーム開始前じゃない
+                                        //投票できない
                                         self.isError = true;
                                     } 
                                 })
