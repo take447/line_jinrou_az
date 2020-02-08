@@ -84,7 +84,7 @@
                             axios.get("https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec?mode=voteMember&userid="+self.data.uid)
                                 .then(function(response){   
                                     var getData = response.data;
-                                    console.log(getData);
+                                    console.log(response);
                                     if(Object.keys(getData).length ===2){
                                         self.day = getData.day;
                                         self.playerList = getData.list;
