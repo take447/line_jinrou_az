@@ -85,10 +85,11 @@
                             axios.get("https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec?mode=voteMember&userid="+self.uid)
                                 .then(function(response){   
                                     var getData = response.data;
-                                    if(Object.keys(getData).length ===3){
-                                        self.data.day = getData.day;
+                                    if(Object.keys(getData).length ===4){
                                         self.playerList = getData.list;
+                                        self.data.day = getData.day;
                                         self.data.vid = getData.villageId;
+                                        self.data.pid = getData.playerId;
                                         self.isShow = true;
                                     }else{
                                         //投票できない
