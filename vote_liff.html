@@ -80,7 +80,7 @@
                             self.data.uid = profile.userId;
                             self.data.name = profile.displayName;
 
-                            axios.get("https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec?mode=voteMember&userid="&self.data.userId)
+                            axios.get("https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec?mode=voteMember&userid="&self.data.uid)
                                 .then(function(response){   
                                     var getData = response.data;
                                     console.log(getData);//デバッグ
