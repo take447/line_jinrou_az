@@ -81,7 +81,7 @@
                             self.uid = profile.userId;
                             self.name = profile.displayName;
 
-                            axios.get("https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec?mode=voteMember&userid="+self.data.uid)
+                            axios.get("https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec?mode=voteMember&userid="+self.uid)
                                 .then(function(response){   
                                     var getData = response.data;
                                     console.log(response);
