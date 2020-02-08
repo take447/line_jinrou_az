@@ -12,7 +12,7 @@
 
 <body class="my-5">
     <div id="app">
-        <div class="fixed-top h5 bg-info text-white mx-auto">{{data.name}} > メニュー > 投票 > {{data.day}}日目 </div>
+        <div class="fixed-top h5 bg-info text-white mx-auto">{{name}} > メニュー > 投票 > {{day}}日目 </div>
         <div class="container" v-show="isShow">
             <div class="row">
                 <ul class="list-group col-12">
@@ -88,7 +88,6 @@
                                         self.day = getData.day;
                                         self.playerList = getData.list;
                                         self.isShow = true;
-                                        console.log(self.playerList);
                                     }else{
                                         //ゲーム開始前じゃない
                                         self.isError = true;
