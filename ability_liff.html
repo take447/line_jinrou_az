@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-with, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="content-type" content="text/html; charset = UTF-8">
-    <title>【LINE人狼】参加</title>
+    <title>【LINE人狼】能力実行</title>
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
 </head>
@@ -86,7 +86,7 @@
                             axios.get("https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec?mode=abilityList&userid="+self.uid)
                                 .then(function(response){   
                                     var getData = response.data;
-                                    if(Object.keys(getData).length ===4){
+                                    if(Object.keys(getData).length ===6){
                                         self.playerList = getData.list;
                                         self.data.day = getData.day;
                                         self.data.vid = getData.villageId;
