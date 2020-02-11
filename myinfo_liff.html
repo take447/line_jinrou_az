@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-with, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="content-type" content="text/html; charset = UTF-8">
+    <title>【LINE人狼】参加</title>
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
+</head>
+
+<body class="my-5">
+    <div id="app">
+        <div class="fixed-top h5 bg-info text-white mx-auto">{{name}} > メニュー > 参加 </div>
+        <div class="container" v-show="isShow">
+            <div class="row">
+                <div class="col-4">役職</div>
+                <div class="col-">{{role}}</div>
+            </div>
+            <div class="row">
+                <div class="col-4">陣営</div>
+                <div class="col-">{{team}}}</div>
+            </div>
+            <div class="row">
+                <div class="col-4">役職</div>
+                <div class="col-">{{role}}</div>
+            </div>
+            <div class="row">
+                <div class="col-4">役職</div>
+                <div class="col-">{{role}}</div>
+            </div>
+        </div>
+            
+        <div v-if="isError">参加してないよ</div>
+ 
+        <div v-show='isShow'>
+            <button type="button" class="btn btn-primary btn-lg btn-block fixed-bottom" v-if="!isMainGroup" @click="enter">情報をLINEで送る</button>
+        </div>
+
+        <div class="d-flex justify-content-center" v-if="!isShow && !isError">
+            <div class="spinner-border " role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        
+    </div>
+        
+        
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+    <script src="./vconsole.min.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                day:'',
+                time:'',
+                uid:'',
+                name:'',
+                cn:'',
+                role:'',
+                team:'',
+                gameresult:'',
+                info:'',
+                isShow: false,
+                isError:false,
+                isMainGroup:false;
+            },
+            mounted :function(){
+                var self = this;
+                liff
+                .init({
+                    liffId: "1653830188-r9ZeZwK7" // use own liffId
+                })
+                .then(function() {
+                    // Start to use liff's api
+                    liff.getProfile()
+                        .then(function(profile){
+                            self.uid = profile.userId;
+                            self.name = profile.displayName;
+                            axios.get("https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec?mode=myinfo&userid=" + self.uid)
+                                .then(function(response){
+                                    var getData = response.data;
+                                    console.log(getData);//デバッグ
+                                    if(villageInfo.exists == true){
+                                        var place = liff.getContext();
+                                        if(place.type == 'group'){
+                                            if(place.groupId == getData.groupid){
+                                                self.isMainGroup = true;
+                                            }
+                                        }
+                                        self.day = getData.day;
+                                        self.time = getData.time;
+                                        self.cn = getData.cn;
+                                        self.role = getData.role;
+                                        self.team = getData.team;
+                                        self.gameresult = getData.gameresult;
+                                        self.info = getData.info;
+                                        self.isShow = true;
+                                    }else{
+                                        //ゲーム開始前じゃない
+                                        self.isError = true;
+                                    } 
+                                })
+                                .catch(function (error) {
+                                    console.log(error);
+                                });
+
+                        })
+                        .catch((err) => {
+                        console.log('error', err);
+                        });
+
+                })
+                .catch((err) => {
+                    // Error happens during initialization
+                    console.log(err.code, err.message);
+                });
+
+
+            },
+            methods:{
+                enter: function(){
+                    var mes = [];
+                        mes[0] = {
+                            type: 'text',
+                            text:'情報を出力'
+                        };                    
+
+                liff.sendMessages(mes)
+                    .then(() => {
+                        liff.closeWindow();
+                    })
+                    .catch((err) => {
+                        console.log('error', err);
+                    });
+
+            }
+        })
+    </script>
+
+
+<script>
+window.onload = function(){
+    initVConsole();
+
+}
+// Initialize vConsole
+function initVConsole() {
+    window.vConsole = new window.VConsole({
+        defaultPlugins: ['system', 'network', 'element', 'storage'],
+        maxLogNumber: 1000,
+        onReady: function() {
+            console.log('vConsole is ready.');
+        },
+        onClearLog: function() {
+            console.log('on clearLog');
+        }
+    });
+}
+</script>
+
+
+</body>
+
+</html>
