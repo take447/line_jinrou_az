@@ -124,13 +124,19 @@
                     axios.post('https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec',JSON.stringify(this.data))
                     .then(response => {
                         //正常にできた処理
-
-
                         var mes = [];
+                        if(response.data.isSuccess==true){
                             mes[0] = {
                                 type: 'text',
                                 text: this.data.day + '日目【' + this.data.vote.cn + '】に投票しました'
                             };
+                        }else{
+                            mes[0] = {
+                                type: 'text',
+                                text: this.data.day + '日目　投票できませんでした'
+                            };
+                        }
+                            
 
                         liff.sendMessages(mes)
                             .then(() => {
