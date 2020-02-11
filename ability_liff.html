@@ -61,16 +61,12 @@
                     pid:'',
                     day:'',
                     ability:'',
-                    target:{
-                        id:'',
-                        cn:'',
-                        life:''
-                    }, 
+                    target:{}, 
                 },
                 uid: '',
                 name:'',
                 abilityName:'',
-                playerList:[],
+                playerList:[{id:'',cn:'',life:''}],
                 isShow: false,
                 isError:false,
             },
@@ -155,7 +151,7 @@
                     .catch(response => {console.log(response);this.err = JSON.stringify(response)});
                 }
             }
-        })
+        });
     </script>
 
 
