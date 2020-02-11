@@ -87,7 +87,7 @@
                                 .then(function(response){
                                     var getData = response.data;
                                     console.log(getData);//デバッグ
-                                    if(villageInfo.exists == true){
+                                    if(getData.exists == true){
                                         var place = liff.getContext();
                                         if(place.type == 'group'){
                                             if(place.groupId == getData.groupid){
