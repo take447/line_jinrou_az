@@ -14,21 +14,31 @@
     <div id="app">
         <div class="fixed-top h5 bg-info text-white mx-auto">{{name}} > メニュー > 参加 </div>
         <div class="container" v-show="isShow">
-            <div class="row">
-                <div class="col-4">役職</div>
-                <div class="col-">{{role}}</div>
-            </div>
-            <div class="row">
-                <div class="col-4">陣営</div>
-                <div class="col-">{{team}}}</div>
-            </div>
-            <div class="row">
-                <div class="col-4">役職</div>
-                <div class="col-">{{role}}</div>
-            </div>
-            <div class="row">
-                <div class="col-4">役職</div>
-                <div class="col-">{{role}}</div>
+            <div class="list-group">
+                <div class="list-group-item">
+                    <p class="list-group-item-text">ゲーム内の日付</p>
+                    <h4 class="list-group-item-heading">{{day}}日目</h4>
+                </div>
+                <div class="list-group-item">
+                    <p class="list-group-item-text">ゲーム内の時間</p>
+                    <h4 class="list-group-item-heading">{{time}}}</h4>
+                </div>
+                <div class="list-group-item">
+                    <p class="list-group-item-text">ゲーム中の名前</p>
+                    <h4 class="list-group-item-heading">{{cn}}</h4>
+                </div>
+                <div class="list-group-item">
+                    <p class="list-group-item-text">役職</p>
+                    <h4 class="list-group-item-heading">{{role}}</h4>
+                </div>
+                <div class="list-group-item">
+                    <p class="list-group-item-text">陣営</p>
+                    <h4 class="list-group-item-heading">{{team}}}陣営</h4>
+                </div>
+                <div class="list-group-item">
+                    <p class="list-group-item-text">勝敗</p>
+                    <h4 class="list-group-item-heading">{{gameresult}}}</h4>
+                </div>
             </div>
         </div>
             
