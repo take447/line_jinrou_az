@@ -5,26 +5,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-with, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="content-type" content="text/html; charset = UTF-8">
-    <title>【LINE人狼】参加</title>
+    <title>【LINE人狼】情報</title>
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
 </head>
 
 <body class="my-5">
     <div id="app">
-        <div class="fixed-top h5 bg-info text-white mx-auto">{{name}} > メニュー > 参加 </div>
+        <div class="fixed-top h5 bg-info text-white mx-auto">{{name}} > メニュー > 情報</div>
         <div class="container" v-show="isShow">
             <div class="list-group">
                 <div class="list-group-item my-0">
-                    <small class="list-group-item-text my-0">ゲーム内の日付</small>
-                    <p class="list-group-item-heading my-0">{{day}}日目</p>
+                    <small class="list-group-item-text my-0">現在</small>
+                    <p class="list-group-item-heading my-0">{{day}}日目 {{time}}</p>
                 </div>
                 <div class="list-group-item my-0">
-                    <small class="list-group-item-text my-0">ゲーム内の時間</small>
-                    <p class="list-group-item-heading my-0">{{time}}</p>
-                </div>
-                <div class="list-group-item my-0">
-                    <small class="list-group-item-text my-0">ゲーム中の名前</small>
+                    <small class="list-group-item-text my-0">ゲーム中の名前(キャラクターネーム)</small>
                     <p class="list-group-item-heading my-0">{{cn}}</p>
                 </div>
                 <div class="list-group-item my-0">
@@ -143,7 +139,14 @@
                     var mes = [];
                         mes[0] = {
                             type: 'text',
-                            text:'情報を出力'
+                            text: 
+                                this.day + '日目 ' + this.time + '\n'
+                                    + '【' + this.cn +'】の情報\n'
+                                    + '役職：' + this.role + '\n'
+                                    + '陣営：' + this.team + '\n'
+                                    + '勝敗：' + this.gameresult + '\n'
+                                    + '---------------\n'
+                                    + this.info 
                         };                    
 
                 liff.sendMessages(mes)
