@@ -16,22 +16,10 @@
         <div class="container" v-show="isShow">
             <ul class="list-group col-12">
                 <li class="list-group-item col-12" v-for="log in logList">                   
-                    <div class="row">
-                        <div class="col-4">開始</div>
-                        <div class="col-7">{{log.ins_date| moment}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-4">現在</div>
-                        <div class="col-7">{{log.day}}日目 {{log.time}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-4">名前</div>
-                        <div class="col-7">{{log.cn}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-4">役職</div>
-                        <div class="col-7">{{log.role}}</div>
-                    </div>
+                    <div>開始：{{log.ins_date| moment}}</div>
+                    <div>現在：{{log.day}}日目 {{log.time}}</div>
+                    <div>名前：{{log.cn}}</div>
+                    <div>役職：{{log.role}}</div>
                     <a class="btn btn-primary btn-lg btn-block" :href="'https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec?mode=logView&villageid='+ log.villageid ">ログを開く</a>
                 </li>
             </ul>
