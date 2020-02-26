@@ -32,7 +32,7 @@
                         <div class="col-4">役職</div>
                         <div class="col-7">{{log.role}}</div>
                     </div>
-                    <button type="button" class="btn btn-primary btn-lg btn-block" :on-click="'location.href=https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec?mode=logView&villageid='+log.villageid">ログを開く</button>
+                    <a class="btn btn-primary btn-lg btn-block" :href="'https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec?mode=logView&villageid='+ log.villageid ">ログを開く</a>
                 </li>
             </ul>
         </div>
