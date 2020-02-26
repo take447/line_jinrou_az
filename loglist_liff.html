@@ -19,11 +19,23 @@
                     <li class="list-group-item" v-for="log in logList">                   
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="loglist" v-model="villageId" :id="log.villageid" :value="log.villageid">
-                            <label class="row form-check-label" :for="log.villageid">
-                                <div class="col-2">{{log.ins_date| moment}}</div>
-                                <div class="col-3">{{log.cn}}</div>
-                                <div class="col-4">役職：{{log.role}}</div>
-                                <div class="col-3">{{log.day}}日目 {{log.time}}</div>
+                            <label class="form-check-label" :for="log.villageid">
+                                <div class="row">
+                                    <div class="col-3">村建て日</div>
+                                    <div class="col-9">{{log.ins_date| moment}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 ">現在</div>
+                                    <div class="col-9">{{log.day}}日目 {{log.time}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">名前</div>
+                                    <div class="col-9">{{log.cn}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">役職</div>
+                                    <div class="col-9">{{log.role}}</div>
+                                </div>
                             </label>
                         </div>
                     </li>
@@ -112,7 +124,7 @@
             },
             filters: {
                 moment: function (date) {
-                    return moment(Date.parse(date)).format('YY/MM/DD');
+                    return moment(Date.parse(date)).format('YYYY/MM/DD');
                 }
             }
         })
