@@ -18,7 +18,7 @@
                 <ul class="list-group col-12">
                     <li class="list-group-item" v-for="log in logList">                   
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="loglist" v-model="villageId" :value="log.villageid">
+                            <input class="form-check-input" type="radio" name="loglist" v-model="villageId" :id="log.villageid" :value="log.villageid">
                             <label class="row form-check-label" :for="log.villageid">
                                 <div class="col-3">{{log.ins_date| moment}}</div>
                                 <div class="col-3">{{log.cn}}</div>
