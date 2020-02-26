@@ -20,7 +20,7 @@
                         <input class="form-check-input" type="radio" name="loglist" v-model="villageId" :id="log.villageid" :value="log.villageid">
                         <label class="form-check-label" :for="log.villageid">
                             <div class="row">
-                                <div class="col-4">村建て日</div>
+                                <div class="col-4">開始</div>
                                 <div class="col-7">{{log.ins_date| moment}}</div>
                             </div>
                             <div class="row">
@@ -37,7 +37,7 @@
                             </div>
                         </label>
                     </div>
-                    <button type="button" class="btn btn-primary btn-lg btn-block fixed-bottom" :on-click="'location.href=https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec?mode=logView&villageid='+villageId">ログを開く</button>
+                    <button type="button" class="btn btn-primary btn-lg btn-block" :on-click="'location.href=https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec?mode=logView&villageid='+villageId">ログを開く</button>
                 </li>
             </ul>
         </div>
