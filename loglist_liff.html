@@ -79,7 +79,7 @@
                             self.userid = profile.userId;
                             self.name = profile.displayName;
 
-                            axios.get("https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec?mode=logList&userid="+self.uid)
+                            axios.get("https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec?mode=logList&userid="+self.userid)
                                 .then(function(response){   
                                     var getData = response.data;
                                     if(getData.exists == true){
@@ -87,6 +87,7 @@
                                         self.isShow = true;
                                     }else{
                                         self.isError = true;
+                                        console.log(JSON.stringify(self));
                                     }
                                     
 
