@@ -48,8 +48,8 @@
                         </div>
                     </div>
                 </li>
-                <li>
-                    <div class="col-6"><button type="button" class="btn btn-outline-info btn-block" @click="logView">もっと見る</button></div>
+                <li v-show="!isLoading">
+                    <div class="col-12 py-2"><button type="button" class="btn btn-secondary btn-block" @click="logView">もっと見る</button></div>
                 </li>
             </ul>
         </div>
@@ -58,7 +58,7 @@
         <div v-if="isError">参加した村が無いよ</div>
 
         <!--読み込み中-->
-        <div class="d-flex justify-content-center" v-if="!isShow_list && !isShow_contents && !isError">
+        <div class="d-flex justify-content-center py-2" v-if="isLoading">
             <div class="spinner-border " role="status">
                 <span class="sr-only">Loading...</span>
             </div>
@@ -90,6 +90,7 @@
                 isShow_list: false,
                 isShow_contents: false,
                 isError:false,
+                isLoading:true
             },
             mounted :function(){
                 var self = this;
@@ -109,6 +110,7 @@
                                     var getData = response.data;
                                     if(getData.exists == true){
                                         self.logList = getData.list;
+                                        self.isLoading = false;
                                         self.isShow_list = true;
                                     }else{
                                         self.isError = true;
@@ -151,11 +153,12 @@
                     }else{
                         this.referenceid = '99999999';
                     }
-                    logView();
+                    this.logView();
                 },
                 logView: function(){
                     var self = this;
                     self.isShow_list = false;
+                    self.isLoading = true;
                     axios.get("https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec?mode=logView2&userid="+ self.userid +"&villageid="+ self.villageId + "&referenceid="+ self.referenceid + "&ordermode=" +self.orderMode)
                                 .then(function(response){   
                                     var getData = response.data;
@@ -163,8 +166,9 @@
                                         self.isShow_contents = true;
                                         for(var i=0;i< getData.list.length;i++){
                                             self.logContents.push(getData.list[i]);
-                                            self.referenceid = getData.list[i].referenceid;
+                                            self.referenceid = getData.list[i].tblid;
                                         }
+                                        self.isLoading = false;
                                     }else{
                                         self.isError = true;
                                         console.log(JSON.stringify(self));
