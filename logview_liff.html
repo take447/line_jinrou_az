@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-with, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="content-type" content="text/html; charset = UTF-8">
+    <title>【LINE人狼】 ログ閲覧</title>
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
+</head>
+
+<body class="my-5">
+    <div id="app">
+        <div class="fixed-top h5 bg-info text-white mx-auto">{{name}} > メニュー > ログ閲覧 </div>
+
+        <!--村リスト-->
+        <div class="container" v-if="isShow_list">
+            <ul class="list-group col-12">
+                <li class="list-group-item col-12" v-for="log in logList">                   
+                    <div>開始：{{log.ins_date| moment}}</div>
+                    <div>現在：{{log.day}}日目 {{log.time}}</div>
+                    <div>名前：{{log.cn}}</div>
+                    <div>役職：{{log.role}}</div>
+                    <div>勝敗：{{log.gameresult}}</div>
+                    <div class="row">
+                        <div class="col-6"><button type="button" class="btn btn-outline-info btn-block" @click="logViewInit(log.villageid,'asc')">最初から</button></div>
+                        <div class="col-6"><button type="button" class="btn btn-outline-info btn-block" @click="logViewInit(log.villageid,'desc')">最後から</button></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!--ログ本文-->
+        <div class="container-fluid　p-1" v-if="isShow_contents">
+            <ul class="list-group col-12">
+                <li class="list-group-item col-12" v-for="data in logContents">                   
+                    <div class="row px-1">
+                        <div class="col-4 align-self-center px-1">
+                            <div v-show="data.place !='昼会話'"><small>{{data.place}}</small></div>
+                            <div>{{data.cn}}</div>
+                            <div><small>{{data.role}}</small></div>
+                        </div>
+                        <div class="col-8 align-self-center px-1">
+                            <div v-if="data.type!='image'" style="white-space:pre-wrap; word-wrap:break-word;">{{data.message}}</div>
+                            <div v-if="data.type=='image'"><img class="img-fluid mx-auto d-block" :src="data.message"></div>
+                            <div class="text-right"><small>{{data.ins_date | moment2}} ({{data.day}}日目 {{data.time}})</small></div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="col-6"><button type="button" class="btn btn-outline-info btn-block" @click="logView">もっと見る</button></div>
+                </li>
+            </ul>
+        </div>
+            
+        <!--エラー-->
+        <div v-if="isError">参加した村が無いよ</div>
+
+        <!--読み込み中-->
+        <div class="d-flex justify-content-center" v-if="!isShow_list && !isShow_contents && !isError">
+            <div class="spinner-border " role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        
+    </div>
+        
+        
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/ja.js"></script>
+    <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+    <script src="./vconsole.min.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                userid:'',
+                name:'',
+                villageId:'',
+                logList:[],
+                logContents:[],
+                referenceid:'',
+                ordermode:'asc',
+                isShow_list: false,
+                isShow_contents: false,
+                isError:false,
+            },
+            mounted :function(){
+                var self = this;
+                liff
+                .init({
+                    liffId: "1653830188-Pm8D8g5j" // use own liffId
+                })
+                .then(function() {
+                    // Start to use liff's api
+                    liff.getProfile()
+                        .then(function(profile){
+                            self.userid = profile.userId;
+                            self.name = profile.displayName;
+
+                            axios.get("https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec?mode=logList&userid="+self.userid)
+                                .then(function(response){   
+                                    var getData = response.data;
+                                    if(getData.exists == true){
+                                        self.logList = getData.list;
+                                        self.isShow_list = true;
+                                    }else{
+                                        self.isError = true;
+                                        console.log(JSON.stringify(self));
+                                    }
+                                    
+
+                                })
+                                .catch(function (error) {
+                                    console.log(error);
+                                });
+
+                        })
+                        .catch((err) => {
+                        console.log('error', err);
+                        });
+
+                })
+                .catch((err) => {
+                    // Error happens during initialization
+                    console.log(err.code, err.message);
+                });
+
+
+            },
+            filters: {
+                moment: function (date) {
+                    return moment(Date.parse(date)).format('YYYY/MM/DD');
+                },
+                moment2: function (date) {
+                    return moment(Date.parse(date)).format('MM/DD hh:mm');
+                }
+            },
+            methods:{
+                logViewInit: function(villageId,orderMode){
+                    this.villageId = villageId;
+                    this.orderMode = orderMode;
+                    if(this.orderMode == 'asc'){
+                        this.referenceid = '0';
+                    }else{
+                        this.referenceid = '99999999';
+                    }
+                    logView();
+                },
+                logView: function(){
+                    var self = this;
+                    self.isShow_list = false;
+                    axios.get("https://script.google.com/macros/s/AKfycbzYYOCqHs74XNmtJjfOLQRmR5lUQS5m0JKccJXh7XtrEjXr4wKs/exec?mode=logView2&userid="+ self.userid +"&villageid="+ self.villageId + "&referenceid="+ self.referenceid + "&ordermode=" +self.orderMode)
+                                .then(function(response){   
+                                    var getData = response.data;
+                                    if(getData.exists == true){
+                                        self.isShow_contents = true;
+                                        for(var i=0;i< getData.list.length;i++){
+                                            self.logContents.push(getData.list[i]);
+                                            self.referenceid = getData.list[i].referenceid;
+                                        }
+                                    }else{
+                                        self.isError = true;
+                                        console.log(JSON.stringify(self));
+                                    }
+                                    
+
+                                })
+                                .catch(function (error) {
+                                    console.log(error);
+                                });
+                }
+            }
+        })
+    </script>
+
+
+<script>
+window.onload = function(){
+    initVConsole();
+}
+// Initialize vConsole
+function initVConsole() {
+    window.vConsole = new window.VConsole({
+        defaultPlugins: ['system', 'network', 'element', 'storage'],
+        maxLogNumber: 1000,
+        onReady: function() {
+            console.log('vConsole is ready.');
+        },
+        onClearLog: function() {
+            console.log('on clearLog');
+        }
+    });
+}
+</script>
+
+
+
+</body>
+
+</html>
