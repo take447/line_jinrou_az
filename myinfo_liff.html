@@ -39,6 +39,16 @@
                     <small class="list-group-item-text my-0">お知らせ</small>
                     <p class="list-group-item-heading my-0">{{info}}</p>
                 </div>
+                <div class="list-group-item my-0">
+                    <small class="list-group-item-text my-0">他の参加者</small>
+                    
+                    <ul class="list-group col-12">
+                        <li class="list-group-item" v-for="player in playerList">
+                            {{player.cn}}<span class="badge badge-pill badge-danger" v-if="player.life !='生存'">脱落</span>
+                        </li>
+                    </ul>
+
+                </div>
             </div>
         </div>
             
@@ -77,6 +87,7 @@
                 team:'',
                 gameresult:'',
                 info:'',
+                playerList:[],
                 isShow: false,
                 isError:false,
                 isMainGroup:false
@@ -111,6 +122,7 @@
                                         self.team = getData.team;
                                         self.gameresult = getData.gameresult;
                                         self.info = getData.info;
+                                        self.playerList = getData.playerList;
                                         self.isShow = true;
                                     }else{
                                         //ゲーム開始前じゃない
@@ -147,14 +159,24 @@
                                     + '勝敗：' + this.gameresult + '\n'
                                     + '---------------\n'
                                     + this.info 
-                        };                    
+                        };
+                        if(this.playerList.length !=0){
+                            mes[1] = "他の参加者"
+                            for(var i=0;i<playerList.length;i++){
+                                mes[1] += '\n・' + this.playerList[i].cn;
+                                if(this.playerList[1].life == '脱落'){
+                                    mes[1] += '(脱落)';
+                                } 
+                            }
+                        }
+                                        
 
-                liff.sendMessages(mes)
-                    .then(() => {
-                        liff.closeWindow();
+                    liff.sendMessages(mes)
+                        .then(() => {
+                            liff.closeWindow();
                     })
-                    .catch((err) => {
-                        console.log('error', err);
+                        .catch((err) => {
+                            console.log('error', err);
                     });
                 }
 
