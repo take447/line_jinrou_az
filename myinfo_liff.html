@@ -161,11 +161,14 @@
                                     + this.info 
                         };
                         if(this.playerList.length !=0){
-                            mes[1] = "他の参加者"
+                            mes[1] ={
+                                type:'text',
+                                text:'他の参加者'
+                            }
                             for(var i=0;i<this.playerList.length;i++){
-                                mes[1] += '\n・' + this.playerList[i].cn;
+                                mes[1].text += '\n・' + this.playerList[i].cn;
                                 if(this.playerList[1].life == '脱落'){
-                                    mes[1] += '(脱落)';
+                                    mes[1].text += '(脱落)';
                                 } 
                             }
                         }
