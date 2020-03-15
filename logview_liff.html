@@ -12,7 +12,21 @@
 
 <body class="my-5">
     <div id="app">
-        <div class="fixed-top h5 bg-info text-white mx-auto">{{name}} > メニュー > ログ閲覧 </div>
+        <div class="fixed-top h5 bg-info text-white mx-auto">
+            <div><button type="button" class="btn btn-primary px-3" @click="settingMenu" v-if="isShow_contents"><span v-show="!isShowSettingMenu">▼</span><span v-show="isShowSettingMenu">▲</span></button><span class="px-3">{{name}} > メニュー > ログ閲覧</span></div>
+        </div>
+
+        <!--設定メニュー-->
+        <div v-show="isShowSettingMenu">
+            <ul class="list-group">
+                <li class="list-group-item" v-for="(value, key, index) in nameList" :key='value.id'>                   
+                    <div class="custom-control custom-switch">
+                        <input class="custom-control-input" type="checkbox" autocomplete="off" v-model="nameList[key]" :id="index" :value="value">
+                        <label class="custom-control-label" :for="index">{{key}}</label>
+                    </div>
+                </li>
+            </ul>
+        </div>
 
         <!--村リスト-->
         <div class="container" v-if="isShow_list">
@@ -32,9 +46,9 @@
         </div>
 
         <!--ログ本文-->
-        <div class="container-fluid　p-1" v-if="isShow_contents">
+        <div class="container-fluid　p-1" v-if="isShow_contents && !isShowSettingMenu">
             <ul class="list-group col-12">
-                <li class="list-group-item col-12" v-for="data in logContents">                   
+                <li class="list-group-item col-12" v-for="data in logContents" v-show="nameList[data.cn]">                   
                     <div class="row px-1">
                         <div class="col-4 align-self-center px-1">
                             <div v-show="data.place !='昼会話'"><small>{{data.place}}</small></div>
@@ -85,10 +99,12 @@
                 villageId:'',
                 logList:[],
                 logContents:[],
+                nameList:{},
                 referenceid:'',
                 ordermode:'asc',
                 isShow_list: false,
                 isShow_contents: false,
+                isShowSettingMenu:false,
                 isError:false,
                 isLoading:true
             },
@@ -167,6 +183,13 @@
                                         for(var i=0;i< getData.list.length;i++){
                                             self.logContents.push(getData.list[i]);
                                             self.referenceid = getData.list[i].tblid;
+
+                                            if(!self.nameList.hasOwnProperty(getData.list[i].cn)){
+                                                self.$set(self.nameList,getData.list[i].cn,true);
+                                                console.log(getData.list[i].cn);
+                                            }
+                                            
+
                                         }
                                         self.isLoading = false;
                                     }else{
@@ -179,6 +202,10 @@
                                 .catch(function (error) {
                                     console.log(error);
                                 });
+                },
+                //設定メニューのON/OFF
+                settingMenu: function(){
+                    this.isShowSettingMenu = !this.isShowSettingMenu;
                 }
             }
         })
